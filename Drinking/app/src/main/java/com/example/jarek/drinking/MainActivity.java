@@ -1,9 +1,8 @@
-package rasberypi.androidprotoype;
+package com.example.jarek.drinking;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,17 +10,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActionBarActivity {
     String name;
-    String[] items = {"Power Strip 1", "Power Strip 2"};
+    private Spinner spinner;
+    io ii = new io();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ii.load(this);
+        //ii.Name.add("HELLO");
+        //ii.Name.add("NAMe");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner f = (Spinner) findViewById(R.id.drop);
+        Spinner dropdown = (Spinner)findViewById(R.id.drop);
+        String[] items = new String[ii.Name.size()];
+        for(int i = 0; i<ii.Name.size();i++){
+            String s =ii.Name.get(i);
+            items[i]=s;
+        }
+       //for(int i = 0; i < ii.Name.size(); i++){items[i] = ii.Name.get(1);}
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-        f.setAdapter(adapter);
+        dropdown.setAdapter(adapter);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,12 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void power_strip1(View V){
+    public void toggleLabel(View v) {
+        Intent launchActivity = new Intent(getApplicationContext(), Activity2.class);
+        startActivity(launchActivity);
+}
+    public void toggleLabel2(View V){
         Spinner f = (Spinner) findViewById(R.id.drop);
         name = (String) f.getSelectedItem();
-        Intent launchActivity2 = new Intent(getApplicationContext(), Main2Activity.class);
-        launchActivity2.putExtra("name", name);
-        startActivity(launchActivity2);
+        Intent launchActivity1 = new Intent(getApplicationContext(), Activity3.class);
+        launchActivity1.putExtra("name", name);
+        startActivity(launchActivity1);
+        //go to new activity
     }
+
 }
